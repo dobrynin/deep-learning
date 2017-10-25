@@ -46,7 +46,7 @@ class MultivariateOptimizationAnimation:
             np.abs(self.theta0s[-1] - self.theta0s[-2]),
             np.abs(self.theta1s[-1] - self.theta1s[-2])
         ])
-        if np.sqrt(update.dot(update)) < type(self).EPSILON:
+        if np.min(update) < type(self).EPSILON:
             return
 
         for idx, theta1 in enumerate(self.theta1s[-2:]):

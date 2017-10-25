@@ -43,3 +43,17 @@ class NaiveDifferentiableMultivariateModel(MultivariateModel):
         self.theta0, self.theta1 = new_theta0, new_theta1
 
         return (self.theta0, self.theta1)
+
+class AlternatingDifferentiableMultivariateModel(NaiveDifferentiableMultivariateModel):
+    def __init__(self, theta0, theta1):
+        super().__init__(theta0, theta1)
+        self.iteration = 0
+
+    def improve(self, dataset):
+        if self.iteration % 2 == 0:
+            self.theta0 = self.calculate_improved_theta0(dataset)
+        else:
+            self.theta1 = self.calculate_improved_theta1(dataset)
+        self.iteration += 1
+
+        return (self.theta0, self.theta1)

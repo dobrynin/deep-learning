@@ -14,6 +14,3 @@ class NaiveMultivariateOptimizationExample:
             num_steps = 1,
         )
         animation.run()
-
-if __name__ == "__main__":
-    NaiveMultivariateOptimizationExample.run()
