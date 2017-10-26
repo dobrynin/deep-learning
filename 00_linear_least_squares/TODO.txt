@@ -2,8 +2,4 @@
   possible.
 * Also discuss why this is the maximum likelihood estimate.
 * Put parameter estimation stuff as bonus?
-* Break out as bonus material the simplicity of quadratic
-  optimization. Discuss multidimensional problem when contours are
-  skewed. Show then how you can't just do Newton's method on each
-  dimension seperately.
 * Put derivation of simple least squares formula as a bonus.
