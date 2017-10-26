@@ -27,6 +27,7 @@ class MultivariateOptimizationAnimation:
         )
         self.num_steps = num_steps
         self.sleep = sleep
+        self.did_plot_contours = False
 
     def draw_arrow(self, axes, p1, p2, color, linestyle = 'solid'):
         axes.arrow(
@@ -77,19 +78,19 @@ class MultivariateOptimizationAnimation:
             )
 
     def frame(self, axes, frame_idx):
-        axes.clear()
+        if not self.did_plot_contours:
+            plot = MultivariatePlot(
+                self.dataset,
+                theta0_range = type(self).THETA0_RANGE,
+                theta1_range = type(self).THETA1_RANGE,
+            )
+            plot.plot_error_contours(axes = axes)
+            self.did_plot_contours = True
 
         self.model.improve(self.dataset)
 
         self.theta0s.append(self.model.theta0)
         self.theta1s.append(self.model.theta1)
-
-        plot = MultivariatePlot(
-            self.dataset,
-            theta0_range = type(self).THETA0_RANGE,
-            theta1_range = type(self).THETA1_RANGE,
-        )
-        plot.plot_error_contours(axes = axes)
 
         self.draw_all_steps(axes)
         self.draw_last_update_calculation(axes)
