@@ -19,12 +19,14 @@ class MultivariateOptimizationAnimation:
             dataset,
             model,
             num_steps,
-            sleep = SLEEP):
+            sleep = SLEEP,
+            head_width = HEAD_WIDTH):
         self.dataset = dataset
         self.model = model
         self.theta0s, self.theta1s = (
             [self.model.theta0], [self.model.theta1]
         )
+        self.head_width = head_width
         self.num_steps = num_steps
         self.sleep = sleep
         self.did_plot_contours = False
@@ -36,7 +38,7 @@ class MultivariateOptimizationAnimation:
             dx = p2[0] - p1[0],
             dy = p2[1] - p1[1],
             color = color,
-            head_width = type(self).HEAD_WIDTH,
+            head_width = self.head_width,
             length_includes_head = True,
             linestyle = linestyle,
         )
