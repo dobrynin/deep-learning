@@ -30,7 +30,7 @@ class GradientDescentExample:
     def run(cls):
         for (learning_rate, num_steps) in cls.LEARNING_PARAMS:
             print(f"Learning_rate = {learning_rate}")
-            GradientDescentExample.run_optimization(
+            cls.run_optimization(
                 learning_rate = learning_rate,
                 num_steps = num_steps,
             )
