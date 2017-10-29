@@ -1,5 +1,12 @@
-* Just show them Gradient Descent to finish it off as quickly as
-  possible.
-* Also discuss why this is the maximum likelihood estimate.
-* Put parameter estimation stuff as bonus?
-* Put derivation of simple least squares formula as a bonus.
+* Explain GD:
+  * I already explain the gradient.
+  * I talk about how we want to take small steps toward the minimum,
+    going down each time.
+  * Need to explain why gradient is direction to step in. Feels like I
+    need to explain the dot product.
+* Last: explain what is meant by maximum likelihood estimate.
+  * Show derivation from negative log probabilities.
+* BONUS:
+  * General oarameter estimation discussion
+  * Derivation of simple least squares formula, coefficient of
+    correlation.
