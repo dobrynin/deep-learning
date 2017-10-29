@@ -20,7 +20,8 @@ class MultivariateOptimizationAnimation:
             model,
             num_steps,
             sleep = SLEEP,
-            head_width = HEAD_WIDTH):
+            head_width = HEAD_WIDTH,
+            draw_last_update_calculation = True):
         self.dataset = dataset
         self.model = model
         self.theta0s, self.theta1s = (
@@ -30,6 +31,7 @@ class MultivariateOptimizationAnimation:
         self.num_steps = num_steps
         self.sleep = sleep
         self.did_plot_contours = False
+        self.should_draw_last_update_calculation = draw_last_update_calculation
 
     def draw_arrow(self, axes, p1, p2, color, linestyle = 'solid'):
         axes.arrow(
@@ -95,7 +97,8 @@ class MultivariateOptimizationAnimation:
         self.theta1s.append(self.model.theta1)
 
         self.draw_all_steps(axes)
-        self.draw_last_update_calculation(axes)
+        if self.should_draw_last_update_calculation:
+            self.draw_last_update_calculation(axes)
 
         axes.set_title(
             f"Step #{frame_idx} | "
