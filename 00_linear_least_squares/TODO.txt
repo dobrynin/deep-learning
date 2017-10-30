@@ -1,5 +1,3 @@
-* Last: explain what is meant by maximum likelihood estimate.
-  * Show derivation from negative log probabilities.
 * BONUS:
   * General oarameter estimation discussion
   * Derivation of simple least squares formula, coefficient of
