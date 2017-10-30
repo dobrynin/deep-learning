@@ -22,3 +22,7 @@ class WordEncodingDictionary:
         for word in content.split():
             encoding.add(self.word_to_int(word))
         return encoding
+
+    def decode(self, encodings):
+        cls = type(encodings)
+        return cls(map(self.int_to_word, encodings))

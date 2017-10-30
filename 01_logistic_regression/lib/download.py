@@ -1,3 +1,4 @@
+from lib.config import DATA_DIR
 from lib.email import Email
 from lib.word_encoding_dictionary import WordEncodingDictionary
 import os
@@ -12,13 +13,6 @@ ENRON_SPAM_URL = (
     "/enron1.tar.tar"
 )
 
-DATA_DIR = os.path.abspath(
-    os.path.join(
-        os.path.dirname(__file__),
-        "../data/"
-    )
-)
-
 TAR_FILE_NAME = "enron1.tar.tar"
 ENRON_DATA_DIR_NAME = "enron1"
 
@@ -29,6 +23,7 @@ def set_data_dir(data_dir):
 def download_tarfile():
     tarfile_path = os.path.join(DATA_DIR, TAR_FILE_NAME)
     if os.path.isfile(tarfile_path):
+        print("Tarfile already downloaded!")
         return
 
     print("Downloading enron1.tar.tar")
@@ -39,31 +34,18 @@ def extract_tarfile():
     tarfile_path = os.path.join(DATA_DIR, TAR_FILE_NAME)
     enron_data_dir = os.path.join(DATA_DIR, ENRON_DATA_DIR_NAME)
     if os.path.isdir(enron_data_dir):
+        print("Tarfile already extracted!")
         return
 
     print("Extracting enron1.tar.tar")
     os.system(f"tar -xf {tarfile_path} -C {DATA_DIR}")
     print("Extraction complete!")
 
-def read_email(path, word_encoding_dictionary, label):
-    full_path = os.path.join(DATA_DIR, path)
-    with open(full_path, "r", encoding = "iso-8859-1") as f:
-        try:
-            return Email(
-                path = path,
-                content = f.read(),
-                word_encoding_dictionary = word_encoding_dictionary,
-                label = label
-            )
-        except:
-            print(path)
-            raise
-
 def read_emails_dir(word_encoding_dictionary, path, label):
     emails = []
     for email_fname in os.listdir(os.path.join(DATA_DIR, path)):
         email_path = os.path.join(path, email_fname)
-        email = read_email(
+        email = Email.read(
             path = email_path,
             word_encoding_dictionary = word_encoding_dictionary,
             label = label
@@ -99,6 +81,7 @@ def save_dataset(dataset):
 
 def process_and_save_dataset():
     if os.path.isfile("data/data.p"):
+        print("Dataset already processed!")
         return
 
     print("Reading and processing emails!")

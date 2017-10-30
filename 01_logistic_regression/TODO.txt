@@ -1,0 +1,7 @@
+* Graphical Model
+  * Bayes net
+  * conditional independence
+  * Equation for inference
+  * Show that likelihood is maximized by using exact counts?
+  * Deal with events that are unique or low reach.
+  * Evaluate based on the test set.
