@@ -1,10 +1,13 @@
 import math
 
 class Counts:
-    def __init__(self, total_count = 0, ham_count = 0, spam_count = 0):
-        self.total_count, self.ham_count, self.spam_count = (
-            total_count, ham_count, spam_count
+    def __init__(self, ham_count = 0, spam_count = 0):
+        self.ham_count, self.spam_count = (
+            ham_count, spam_count
         )
+
+    def total_count(self):
+        return self.ham_count + self.spam_count
 
     def to_probs(self):
         return Probs(self)
@@ -18,8 +21,8 @@ class Counts:
 class Probs:
     def __init__(self, counts):
         self.ham_prob, self.spam_prob = (
-            counts.ham_count / counts.total_count,
-            counts.spam_count / counts.total_count
+            counts.ham_count / counts.total_count(),
+            counts.spam_count / counts.total_count()
         )
 
     def to_odds(self):
@@ -64,7 +67,7 @@ class FeatureProbabilities:
         filtered_fps = cls()
         filtered_fps.class_counts = fps.class_counts
         for (code, counts) in fps.code_counts.items():
-            if counts.total_count < limit: continue
+            if counts.total_count() < limit: continue
             filtered_fps.code_counts[code] = counts
 
         return filtered_fps
@@ -73,8 +76,6 @@ class FeatureProbabilities:
         for code in email.codes:
             self.check_code_added(code)
 
-            self.class_counts.total_count += 1
-            self.code_counts[code].total_count += 1
             if is_ham_email:
                 self.class_counts.ham_count += 1
                 self.code_counts[code].ham_count += 1
@@ -88,10 +89,22 @@ class FeatureProbabilities:
     def code_given_class_prob(self, code):
         return self.code_counts[code].to_probs()
 
+    def no_code_given_class_prob(self, code):
+        code_counts = self.code_counts[code]
+        no_code_counts = Counts(
+            ham_count = (
+                self.class_counts.ham_count - code_counts.ham_count
+            ),
+            spam_count = (
+                self.class_counts.spam_count - code_counts.spam_count
+            )
+        )
+
+        return no_code_counts.to_probs()
+
     def check_code_added(self, code):
         if code in self.code_counts: return
         self.code_counts[code] = Counts(
-            total_count = 0,
             ham_count = 0,
             spam_count = 0,
         )
