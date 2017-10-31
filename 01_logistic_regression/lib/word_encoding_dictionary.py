@@ -1,3 +1,5 @@
+from sortedcontainers import SortedSet
+
 class WordEncodingDictionary:
     def __init__(self):
         self.word_to_code_dict = {}
@@ -18,7 +20,7 @@ class WordEncodingDictionary:
         return self.code_to_word_dict[code]
 
     def encode(self, text):
-        codes = set()
+        codes = SortedSet()
         for word in text.split():
             codes.add(self.word_to_code(word))
         return codes
