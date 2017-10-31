@@ -4,7 +4,7 @@ import os
 class Email:
     def __init__(self, path, content, word_encoding_dictionary, label):
         self.path = path
-        self.encoding = word_encoding_dictionary.encode(content)
+        self.codes = word_encoding_dictionary.encode(content)
         self.label = label
         self.word_encoding_dictionary = word_encoding_dictionary
 
@@ -12,7 +12,7 @@ class Email:
         return type(self).read_text_content(self.path)
 
     def words(self):
-        return self.word_encoding_dictionary.decode(self.encoding)
+        return self.word_encoding_dictionary.decode(self.codes)
 
     @classmethod
     def read(cls, path, word_encoding_dictionary, label):

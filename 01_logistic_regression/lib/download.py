@@ -1,4 +1,5 @@
 from lib.config import DATA_DIR
+from lib.dataset import RawDataset
 from lib.email import Email
 from lib.word_encoding_dictionary import WordEncodingDictionary
 import os
@@ -67,13 +68,11 @@ def read_emails():
         label = 1
     )
 
-    dataset = {
-        'word_encoding_dictionary': word_encoding_dictionary,
-        'ham_emails': ham_emails,
-        'spam_emails': spam_emails
-    }
-
-    return dataset
+    return RawDataset(
+        word_encoding_dictionary = word_encoding_dictionary,
+        ham_emails = ham_emails,
+        spam_emails = spam_emails
+    )
 
 def save_dataset(dataset):
     with open("data/data.p", "wb") as f:
