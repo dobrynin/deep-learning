@@ -62,19 +62,9 @@ class FeatureProbabilities:
 
         return fps
 
-    @classmethod
-    def filter(cls, fps, limit):
-        filtered_fps = cls()
-        filtered_fps.class_counts = fps.class_counts
-        for (code, counts) in fps.code_counts.items():
-            if counts.total_count() < limit: continue
-            filtered_fps.code_counts[code] = counts
-
-        return filtered_fps
-
     def add_email(self, email, is_ham_email):
         for code in email.codes:
-            self.check_code_added(code)
+            self._check_code_added(code)
 
             if is_ham_email:
                 self.class_counts.ham_count += 1
@@ -89,6 +79,15 @@ class FeatureProbabilities:
     def code_given_class_prob(self, code):
         return self.code_counts[code].to_probs()
 
+    def filter(self, reach_limit):
+        filtered_fps = (type(self))()
+        filtered_fps.class_counts = self.class_counts
+        for (code, counts) in self.code_counts.items():
+            if counts.total_count() < reach_limit: continue
+            filtered_fps.code_counts[code] = counts
+
+        return filtered_fps
+
     def no_code_given_class_prob(self, code):
         code_counts = self.code_counts[code]
         no_code_counts = Counts(
@@ -102,7 +101,7 @@ class FeatureProbabilities:
 
         return no_code_counts.to_probs()
 
-    def check_code_added(self, code):
+    def _check_code_added(self, code):
         if code in self.code_counts: return
         self.code_counts[code] = Counts(
             ham_count = 0,

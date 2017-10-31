@@ -1,4 +1,5 @@
 from lib.config import DATA_DIR
+from lib.feature_probabilities import FeatureProbabilities
 import os.path
 import pickle
 import zlib
@@ -33,6 +34,12 @@ class Dataset:
             self.word_encoding_dictionary,
             ham_emails = split_ham_emails,
             spam_emails = split_spam_emails
+        )
+
+    def feature_probabilities(self):
+        return FeatureProbabilities.from_emails(
+            ham_emails = self.ham_emails,
+            spam_emails = self.spam_emails
         )
 
 class RawDataset(Dataset):

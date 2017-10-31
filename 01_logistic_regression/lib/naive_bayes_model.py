@@ -23,7 +23,7 @@ class NaiveBayesModel:
 
         return spam_score
 
-    def recall_for_false_positive_rate(self, dataset, limit):
+    def recall_for_false_positive_rates(self, dataset, limits):
         ham_scores = list(map(
             lambda email: self.score_email(email),
             dataset.ham_emails
@@ -35,16 +35,21 @@ class NaiveBayesModel:
             dataset.spam_emails
         ))
 
-        score_cutoff = ham_scores[int(len(ham_scores) * limit)]
-        num_spams_identified = sum(
-            [1 if s > score_cutoff else 0 for s in spam_scores]
-        )
-        recall = (
-            num_spams_identified / len(dataset.spam_emails)
-        )
+        def calculate_result(limit):
+            score_cutoff = ham_scores[int(len(ham_scores) * limit)]
+            num_spams_identified = sum(
+                [1 if s > score_cutoff else 0 for s in spam_scores]
+            )
+            recall = (
+                num_spams_identified / len(dataset.spam_emails)
+            )
 
-        return Result(
-            score_cutoff = score_cutoff,
-            num_spams_identified = num_spams_identified,
-            recall = recall,
-        )
+            return Result(
+                score_cutoff = score_cutoff,
+                num_spams_identified = num_spams_identified,
+                recall = recall,
+            )
+
+        return [
+            (limit, calculate_result(limit)) for limit in limits
+        ]
