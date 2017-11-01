@@ -58,14 +58,17 @@ class FeatureProbabilities:
         return fps
 
     def add_email(self, email, is_ham_email):
+        if is_ham_email:
+            self.class_counts.ham_count += 1
+        else:
+            self.class_counts.spam_count += 1
+
         for code in email.codes:
             self._check_code_added(code)
 
             if is_ham_email:
-                self.class_counts.ham_count += 1
                 self.code_counts[code].ham_count += 1
             else:
-                self.class_counts.spam_count += 1
                 self.code_counts[code].spam_count += 1
 
     def class_prior_probs(self):
@@ -86,9 +89,9 @@ class FeatureProbabilities:
 
         return filtered_fps
 
-    def no_code_prob_ratio(self, code):
+    def no_code_counts(self, code):
         code_counts = self.code_counts[code]
-        no_code_counts = Counts(
+        return Counts(
             ham_count = (
                 self.class_counts.ham_count - code_counts.ham_count
             ),
@@ -97,8 +100,9 @@ class FeatureProbabilities:
             )
         )
 
+    def no_code_prob_ratio(self, code):
         return ConditionalFeatureProbabilityRatio(
-            feature_counts = no_code_counts,
+            feature_counts = self.no_code_counts(code),
             class_counts = self.class_counts
         )
 

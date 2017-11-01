@@ -1,7 +1,8 @@
-* Graphical Model
-  * Bayes net
-  * conditional independence
-  * Equation for inference
-  * Show that likelihood is maximized by using exact counts?
-  * Deal with events that are unique or low reach.
-  * Evaluate based on the test set.
+* Accuracy of NB estimates.
+* What is a PGM?
+* Naive Bayes is linear.
+  * Show as a linear classifier with odds ratio?
+
+## Logistic Regression
+
+* Same idea.
