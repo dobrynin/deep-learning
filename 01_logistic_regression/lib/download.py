@@ -17,10 +17,6 @@ ENRON_SPAM_URL = (
 TAR_FILE_NAME = "enron1.tar.tar"
 ENRON_DATA_DIR_NAME = "enron1"
 
-def set_data_dir(data_dir):
-    global DATA_DIR
-    DATA_DIR = data_dir
-
 def download_tarfile():
     tarfile_path = os.path.join(DATA_DIR, TAR_FILE_NAME)
     if os.path.isfile(tarfile_path):
@@ -55,7 +51,7 @@ def read_emails_dir(word_encoding_dictionary, path, label):
 
     return emails
 
-def read_emails():
+def build_dataset():
     word_encoding_dictionary = WordEncodingDictionary()
     ham_emails = read_emails_dir(
         word_encoding_dictionary = word_encoding_dictionary,
@@ -78,17 +74,17 @@ def save_dataset(dataset):
     with open("data/data.p", "wb") as f:
         pickle.dump(dataset, f)
 
-def process_and_save_dataset():
+def build_and_save_dataset():
     if os.path.isfile("data/data.p"):
         print("Dataset already processed!")
         return
 
     print("Reading and processing emails!")
-    dataset = read_emails()
+    dataset = build_dataset()
     save_dataset(dataset)
     print("Dataset created!")
 
 def run():
     download_tarfile()
     extract_tarfile()
-    process_and_save_dataset()
+    build_and_save_dataset()

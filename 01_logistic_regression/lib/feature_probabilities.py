@@ -12,18 +12,28 @@ class Counts:
     def __repr__(self):
         return self.__dict__.__repr__()
 
+class PriorClassProbabilities:
+    def __init__(self, class_counts):
+        self.ham_prior_prob = (
+            class_counts.ham_count / class_counts.total_count()
+        )
+        self.spam_prior_prob = (
+            class_counts.spam_count / class_counts.total_count()
+        )
+
 class ConditionalFeatureProbabilityRatio:
     def __init__(self, feature_counts, class_counts):
-        prob_feature_given_ham = (
+        self.prob_feature_given_ham = (
             feature_counts.ham_count / class_counts.ham_count
         )
-        prob_feature_given_spam = (
+        self.prob_feature_given_spam = (
             feature_counts.spam_count / class_counts.spam_count
         )
 
-        if (prob_feature_given_ham != 0):
+        if (self.prob_feature_given_ham != 0):
             self.feature_probability_ratio = (
-                prob_feature_given_spam / prob_feature_given_ham
+                self.prob_feature_given_spam
+                / self.prob_feature_given_ham
             )
         else:
             self.feature_probability_ratio = np.inf
@@ -58,8 +68,8 @@ class FeatureProbabilities:
                 self.class_counts.spam_count += 1
                 self.code_counts[code].spam_count += 1
 
-    def class_probs(self):
-        return self.class_counts.to_probs()
+    def class_prior_probs(self):
+        return PriorClassProbabilities(self.class_counts)
 
     def code_prob_ratio(self, code):
         return ConditionalFeatureProbabilityRatio(

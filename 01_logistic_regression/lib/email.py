@@ -26,6 +26,8 @@ class Email:
     @classmethod
     def read_text_content(cls, path):
         full_path = os.path.join(DATA_DIR, path)
+        # Grr! Emails are encoded in Latin-1, not UTF-8. Python
+        # (rightly) freaks out.
         with open(full_path, "r", encoding = "iso-8859-1") as f:
             try:
                 return f.read()

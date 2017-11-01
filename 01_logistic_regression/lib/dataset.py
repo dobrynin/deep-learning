@@ -25,6 +25,10 @@ class Dataset:
         ]
         for (emails, split_emails) in emails_pairs:
             for email in emails:
+                # This is a fancy way to pseudorandomly but
+                # deterministically select emails. That way we always
+                # pick the same set of emails for reproducability
+                # across program runs.
                 h = zlib.crc32(email.path.encode())
                 p = h / (2**32 - 1)
                 if (mode == 0 and p < ratio) or (mode == 1 and p >= ratio):
