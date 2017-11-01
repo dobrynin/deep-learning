@@ -1,4 +1,4 @@
-import math
+import numpy as np
 
 class Counts:
     def __init__(self, ham_count = 0, spam_count = 0):
@@ -9,39 +9,24 @@ class Counts:
     def total_count(self):
         return self.ham_count + self.spam_count
 
-    def to_probs(self):
-        return Probs(self)
-
-    def to_odds(self):
-        return self.to_probs().to_odds()
-
     def __repr__(self):
         return self.__dict__.__repr__()
 
-class Probs:
-    def __init__(self, counts):
-        self.ham_prob, self.spam_prob = (
-            counts.ham_count / counts.total_count(),
-            counts.spam_count / counts.total_count()
+class ConditionalFeatureProbabilityRatio:
+    def __init__(self, feature_counts, class_counts):
+        prob_feature_given_ham = (
+            feature_counts.ham_count / class_counts.ham_count
+        )
+        prob_feature_given_spam = (
+            feature_counts.spam_count / class_counts.spam_count
         )
 
-    def to_odds(self):
-        return Odds(self)
-
-    def __repr__(self):
-        return self.__dict__.__repr__()
-
-class Odds:
-    def __init__(self, probs):
-        if probs.spam_prob != 0.0:
-            self.ham_odds = probs.ham_prob / probs.spam_prob
+        if (prob_feature_given_ham != 0):
+            self.feature_probability_ratio = (
+                prob_feature_given_spam / prob_feature_given_ham
+            )
         else:
-            self.ham_odds = math.inf
-
-        if probs.ham_prob != 0.0:
-            self.spam_odds = probs.spam_prob / probs.ham_prob
-        else:
-            self.spam_odds = math.inf
+            self.feature_probability_ratio = np.inf
 
     def __repr__(self):
         return self.__dict__.__repr__()
@@ -76,8 +61,11 @@ class FeatureProbabilities:
     def class_probs(self):
         return self.class_counts.to_probs()
 
-    def code_given_class_prob(self, code):
-        return self.code_counts[code].to_probs()
+    def code_prob_ratio(self, code):
+        return ConditionalFeatureProbabilityRatio(
+            feature_counts = self.code_counts[code],
+            class_counts = self.class_counts
+        )
 
     def filter(self, reach_limit):
         filtered_fps = (type(self))()
@@ -88,7 +76,7 @@ class FeatureProbabilities:
 
         return filtered_fps
 
-    def no_code_given_class_prob(self, code):
+    def no_code_prob_ratio(self, code):
         code_counts = self.code_counts[code]
         no_code_counts = Counts(
             ham_count = (
@@ -99,7 +87,10 @@ class FeatureProbabilities:
             )
         )
 
-        return no_code_counts.to_probs()
+        return ConditionalFeatureProbabilityRatio(
+            feature_counts = no_code_counts,
+            class_counts = self.class_counts
+        )
 
     def _check_code_added(self, code):
         if code in self.code_counts: return
