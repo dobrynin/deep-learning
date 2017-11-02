@@ -12,10 +12,10 @@ def run():
     ))
 
     words = [
-        "offer",
-        "money",
-        "investment",
-        "consultation"
+        "offer?",
+        "money?",
+        "investment?",
+        "consultation?"
     ]
 
     for idx, word in enumerate(words):

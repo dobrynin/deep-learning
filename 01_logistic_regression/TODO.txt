@@ -1,5 +1,4 @@
 * Accuracy of NB estimates.
-* What is a PGM?
 * Naive Bayes is linear.
   * Show as a linear classifier with odds ratio?
 
