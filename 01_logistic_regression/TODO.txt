@@ -1,7 +1,15 @@
-* Accuracy of NB estimates.
+# Naive Bayes
+
 * Naive Bayes is linear.
   * Show as a linear classifier with odds ratio?
 
-## Logistic Regression
+# Logistic Regression
 
-* Same idea.
+* Talk about how logistic function turns odds ratios into probabilities.
+* Talk about how then doing cross-entropy is effectively the same as
+  minimizing negative log likelihood.
+* Do a GD for the enron dataset.
+
+# Bonus
+
+* Accuracy of NB estimates.
