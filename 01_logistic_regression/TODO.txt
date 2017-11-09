@@ -1,9 +1,10 @@
 I no longer talk about the odds ratio interpretation of the
-coefficients.
+coefficients. Do I want to put that back in?
 
-I hint at but don't explain the problem with GD with the poorly
+I hint at but don't fully explain the problem with GD with the poorly
 parameterized model.
 
-Pretty sure I will leave XE interpretation to a bonus workbook.
+Pretty sure I will leave XE interpretation to a bonus workbook. But I
+think that is not complete.
 
 Should probably show how NB estimates of probability are very poor.
