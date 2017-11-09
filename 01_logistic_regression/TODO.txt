@@ -1,15 +1,9 @@
-# Naive Bayes
+I no longer talk about the odds ratio interpretation of the
+coefficients.
 
-* Naive Bayes is linear.
-  * Show as a linear classifier with odds ratio?
+I hint at but don't explain the problem with GD with the poorly
+parameterized model.
 
-# Logistic Regression
+Pretty sure I will leave XE interpretation to a bonus workbook.
 
-* Talk about how logistic function turns odds ratios into probabilities.
-* Talk about how then doing cross-entropy is effectively the same as
-  minimizing negative log likelihood.
-* Do a GD for the enron dataset.
-
-# Bonus
-
-* Accuracy of NB estimates.
+Should probably show how NB estimates of probability are very poor.
