@@ -1,0 +1,27 @@
+**Part 1**
+
+* Low reach features are inaccurate. Filter them.
+* Conditional Independence
+  * It isn't unconditional independence.
+  * It isn't normally true.
+* Calculating Recall vs false positive rate
+* Negative features
+* Training vs test sets
+* Why does Naive Bayes generalize well?
+
+**Part 2**
+
+* Defining parameters
+* Odds to probability
+* Maximizing Likelihood
+* Why NB isn't necessarily the best model
+* Reparameterization to eliminate "absence" features.
+* Rewriting error as XE error.
+* Sigmoid
+* Derivation of derivatives
+
+**Part 3: Bonus**
+
+* Entropy
+* Generative vs Discriminative
+* Graphical model
