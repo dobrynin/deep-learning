@@ -67,3 +67,14 @@ class FeatureProbabilities:
         )
 
         return code_given_spam_prob / code_given_ham_prob
+
+    def filter(self, limit):
+        fps = type(self)()
+
+        fps.class_counts = self.class_counts
+
+        for code in self.code_counts:
+            if self.code_counts[code].total_count() < limit: continue
+            fps.code_counts[code] = self.code_counts[code]
+
+        return fps
