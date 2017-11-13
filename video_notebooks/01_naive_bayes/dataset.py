@@ -1,3 +1,4 @@
+import numpy as np
 import os.path
 import pickle
 
@@ -21,3 +22,28 @@ class Dataset:
             with open(os.path.join(DATA_DIR, 'data.p'), 'rb') as f:
                 cls.INSTANCE = pickle.load(f)
         return cls.INSTANCE
+
+    def split(self, ratio):
+        training_dataset = Dataset(
+            self.word_encoding_dictionary,
+            [],
+            []
+        )
+        test_dataset = Dataset(
+            self.word_encoding_dictionary,
+            [],
+            []
+        )
+
+        for ham_email in self.ham_emails:
+            if np.random.uniform() < ratio:
+                training_dataset.ham_emails.append(ham_email)
+            else:
+                test_dataset.ham_emails.append(ham_email)
+        for spam_email in self.spam_emails:
+            if np.random.uniform() < ratio:
+                training_dataset.spam_emails.append(spam_email)
+            else:
+                test_dataset.spam_emails.append(spam_email)
+
+        return (training_dataset, test_dataset)
