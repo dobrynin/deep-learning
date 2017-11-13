@@ -8,9 +8,11 @@ class NaiveBayesModel:
             / self.fps.class_counts.ham_count
         )
 
-        for code in email.codes:
-            if code not in self.fps.code_counts: continue
-            odds_email_is_spam *= self.fps.code_prob_ratio(code)
+        for code in self.fps.code_counts:
+            if code not in email.codes:
+                odds_email_is_spam *= self.fps.no_code_prob_ratio(code)
+            else:
+                odds_email_is_spam *= self.fps.code_prob_ratio(code)
 
         return odds_email_is_spam
 
@@ -18,19 +20,3 @@ class NaiveBayesModel:
         return list(
             map(self.score_email, emails)
         )
-
-def recall_for_false_positive_rate(score_cutoff, ham_scores, spam_scores):
-    num_false_positives = len(
-        list(filter(lambda ham_score: ham_score > score_cutoff, ham_scores))
-    )
-    num_true_positives = len(
-        list(filter(lambda spam_score: spam_score > score_cutoff, spam_scores))
-    )
-
-    false_positive_rate = num_false_positives / len(ham_scores)
-    recall = num_true_positives / len(spam_scores)
-
-    return {
-        'false_positive_rate': false_positive_rate,
-        'recall': recall
-    }

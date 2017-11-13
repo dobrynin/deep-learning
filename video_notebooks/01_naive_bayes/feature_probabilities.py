@@ -68,6 +68,31 @@ class FeatureProbabilities:
 
         return code_given_spam_prob / code_given_ham_prob
 
+    def no_code_prob_ratio(self, code):
+        _code_counts = self.code_counts[code]
+        _no_code_counts = Counts()
+        _no_code_counts.spam_count = (
+            self.class_counts.spam_count
+            - _code_counts.spam_count
+        )
+        _no_code_counts.ham_count = (
+            self.class_counts.ham_count
+            - _code_counts.ham_count
+        )
+
+        no_code_given_spam_prob = (
+            _no_code_counts.spam_count / self.class_counts.spam_count
+        )
+
+        if _no_code_counts.ham_count == 0:
+            return np.inf
+
+        no_code_given_ham_prob = (
+            _no_code_counts.ham_count / self.class_counts.ham_count
+        )
+
+        return no_code_given_spam_prob / no_code_given_ham_prob
+
     def filter(self, limit):
         fps = type(self)()
 
