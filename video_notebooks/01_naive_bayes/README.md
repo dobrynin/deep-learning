@@ -33,24 +33,26 @@
 * [
 01i The Naive Assumption
 ](https://s3-us-west-1.amazonaws.com/nedbot/videos/01_naive_bayes/01i_naive_assumption_small.mov)
-()
+(05:43)
 * [
 01j Naive Bayes Pair Calculation
 ](https://s3-us-west-1.amazonaws.com/nedbot/videos/01_naive_bayes/01j_naive_bayes_pair_calculation_small.mov)
-()
+(04:52)
 * [
 01k First Naive Bayes Model
 ](https://s3-us-west-1.amazonaws.com/nedbot/videos/01_naive_bayes/01k_first_naive_bayes_model_small.mov)
-()
+(15:54)
 * [
 01l Absence Features
 ](https://s3-us-west-1.amazonaws.com/nedbot/videos/01_naive_bayes/01l_absence_features_small.mov)
-()
+(12:11)
 * [
 01m Training Test Split
 ](https://s3-us-west-1.amazonaws.com/nedbot/videos/01_naive_bayes/01m_training_test_split_small.mov)
-()
+(05:42)
 * [
 01n Bias vs Variance
 ](https://s3-us-west-1.amazonaws.com/nedbot/videos/01_naive_bayes/01n_bias_vs_variance_small.mov)
-()
+(05:34)
+
+**Total**: 118min 45sec
