@@ -1,16 +1,3 @@
-**Part 1**
-
-* Low reach features are inaccurate. Filter them.
-* Conditional Independence
-  * It isn't unconditional independence.
-  * It isn't normally true.
-* Calculating Recall vs false positive rate
-* Negative features
-* Training vs test sets
-* Why does Naive Bayes generalize well?
-
-**Part 2**
-
 * Defining parameters
 * Odds to probability
 * Maximizing Likelihood
