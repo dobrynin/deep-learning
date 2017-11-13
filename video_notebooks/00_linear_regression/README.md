@@ -54,3 +54,5 @@
 00n SSE Minimizer is Maximum Likelihood Estimate
 ](https://s3-us-west-1.amazonaws.com/nedbot/videos/00_linear_regression/00n_sse_minimizer_is_mle_small.mov)
 (06:22)
+
+**Total**: 83min 11sec
