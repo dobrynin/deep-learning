@@ -1,2 +1,8 @@
-Softmax
-Random initialization
+* Softmax
+* Random initialization
+* Mention we truly need nonlinearity.
+* Backpropagation
+* Talk about the nonconvexity of the problem?
+* Could talk about why depth helps.
+  * Comes basically from that you can use less boolean gates in a
+    circuit with more depth.
