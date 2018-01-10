@@ -25,6 +25,9 @@ style_image_array = np.expand_dims(style_image_array, axis=0)
 
 vgg_model = VGG16(weights='imagenet', include_top=False, input_shape=(768, 1024, 3), pooling='avg')
 
+for layer in vgg_model.layers:
+    print(layer)
+    layer.trainable = False
 
 block1_conv2 = vgg_model.get_layer('block1_conv2')
 block2_conv2 = vgg_model.get_layer('block2_conv2')
@@ -42,7 +45,7 @@ block4_conv2_style_tensor = style_layer(block4_conv2.output)
 block5_conv2_style_tensor = style_layer(block5_conv2.output)
 
 
-model = Model(inputs=vgg_model.input, output=[
+model = Model(input=vgg_model.input, outputs=[
     content_output_tensor,
     block1_conv2_style_tensor,
     block2_conv2_style_tensor,
@@ -53,9 +56,6 @@ model = Model(inputs=vgg_model.input, output=[
 content_matrix, *_ = model.predict(content_image_array)
 _, *style_matrices = model.predict(style_image_array)
 
-for layer in vgg_model.layers:
-    layer.trainable = False
-
 input_tensor = Input(shape=(1,))
 dense_layer = Dense(1024*768*3, activation='linear', use_bias=False)
 dense_tensor = dense_layer(input_tensor)
@@ -63,12 +63,18 @@ reshape_layer = Reshape((768, 1024, 3))
 reshaped_tensor = reshape_layer(dense_tensor)
 final_content, *final_styles = model(reshaped_tensor)
 
-styled_image_model = Model(inputs=input_tensor, output=[
+styled_image_model = Model(input=input_tensor, outputs=[
     final_content,
     *final_styles
 ])
 
-sgd = SGD(lr=0.01)
+sgd = SGD(lr=100)
 styled_image_model.compile(optimizer=sgd, loss='mse')
 styled_image_model.summary()
-styled_image_model.fit(numpy.ones((1,1)), (content_matrix, *style_matrices))
+styled_image_model.fit(
+    np.ones((1,1)), [content_matrix, *style_matrices], epochs=10
+)
+
+weights = dense_layer.get_weights()[0]
+reshaped_weights = np.reshape(weights, (768, 1024, 3))
+save_image(reshaped_weights, "./images/stylized_image.jpg")
